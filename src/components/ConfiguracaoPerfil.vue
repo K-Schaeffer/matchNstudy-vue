@@ -22,7 +22,7 @@
         outlined
         label="Sobre mim"
         placeholder="Conte um pouco sobre você"
-        v-model="perfil.desc"
+        v-model="perfil.descricao"
       >
       </v-textarea>
       <v-text-field
@@ -44,7 +44,9 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-btn depressed color="secondary" block>Salvar</v-btn>
+          <v-btn depressed color="secondary" block @click="salvar()"
+            >Salvar</v-btn
+          >
         </v-col>
       </v-row>
     </div>
@@ -94,6 +96,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ConfiguracaoPerfil",
   data: () => ({
@@ -108,7 +111,30 @@ export default {
       this.listaSkills.push(this.skill);
       this.skill = {};
       this.skillDialog = false;
+    },
+    salvar() {
+      let url = "http://api.anticasper.com/index.php?acao=atualizar";
+      axios
+        .post(url, this.perfil)
+        .then(res => {
+          //Then se dar certo
+          console.log(res)
+        })
+        .catch(err => alert(err));
+    },
+    pegar(codigo) {
+      let url = "http://api.anticasper.com/index.php?acao=pegar";
+      axios
+        .post(url, { codigo })
+        .then(res => {
+          //Then se dar certo
+          this.perfil = res.data;
+        })
+        .catch(err => alert(err));
     }
+  },
+  mounted() {
+    this.pegar(2);
   }
 };
 </script>
