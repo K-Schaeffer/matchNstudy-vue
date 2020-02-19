@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <v-select
+  <v-container>
+    <v-select 
     :items ="listaUsuarios"
     item-text ="nome"
     item-value ="codigo"
     label ="Usuarios"
-    v-model="perfil"
-    @change="pegar(item.codigo)"
+    v-model="perfil2" 
+    @change="troca()"
     outlined>
-    </v-select>
+    </v-select> <!-- V-model serve para manipular o componente -->
     <v-card flat tile color="indigo darken-1" dark class="pa-5 text-center">
       <v-container>
-        <v-avatar size="120px" color="amber darken-2">
+        <v-avatar size="120px" tile>
           <img :src="perfil.img" v-if="perfil.img" />
           <!-- : signfica que está recebendo a variável-->
         </v-avatar>
@@ -20,7 +20,7 @@
         <v-chip>{{ perfil.idade }}</v-chip>
       </v-container>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -29,6 +29,7 @@ export default {
   name: "Perfil",
   data: () => ({
     perfil: {},
+    perfil2: {},
     listaUsuarios: []
   }),
   methods: {
@@ -51,6 +52,9 @@ export default {
           this.listaUsuarios = res.data;
         })
         .catch(err => alert(err));
+    },
+    troca(){
+      this.perfil = this.pegar(this.perfil2);
     }
     },
     mounted() {

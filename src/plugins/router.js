@@ -5,6 +5,7 @@ import Perfil from "../components/Perfil"
 import Principal from "../components/Principal"
 import ConfiguracaoPerfil from "../components/ConfiguracaoPerfil"
 import ListaUsuarios from "../components/ListaUsuarios"
+import Chat from "../components/Chat"
 
 Vue.use(Router)
 
@@ -28,11 +29,16 @@ export default new Router({
         {path: "/configuracaoperfil",
         name: "Configuração",
         component: ConfiguracaoPerfil,
-        icone: "mdi-settings"}, // Sem aspas pois está referenciando o próprio componente
+        icone: "mdi-settings"},
     
         {path: "/listausuarios",
         name: "Lista de Usuários",
         component: ListaUsuarios,
-        icone: "mdi-account-details"} // Sem aspas pois está referenciando o próprio componente
+        icone: "mdi-account-details"}, 
+    
+        {path: "/chat",
+        name: "Chat",
+        component: Chat,
+        icone: "mdi-chat"}
     ]
 })

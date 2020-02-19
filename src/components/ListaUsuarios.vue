@@ -1,43 +1,44 @@
 <template>
-  <v-data-table
-    :headers="cabecalho"
-    :items="usuarios"
-    :items-per-page="5"
-  ></v-data-table>
+  <div>
+    <v-text-field 
+    v-model="search"
+    label="Buscar"> </v-text-field>
+    <v-data-table
+      :headers="cabecalho"
+      :items="usuarios"
+      :items-per-page="5"
+      :search="search"
+    ></v-data-table>
+  </div>
 </template>
 
 <script>
-//import ConfiguracaoPerfil from "../components/ConfiguracaoPerfil"
+import axios from "axios";
 export default {
   name: "ListaUsuarios",
   data: () => ({
+    search: "",
     cabecalho: [
       { text: "Nome", value: "nome" },
       { text: "Idade", value: "idade" },
-      { text: "Habilidades", value: "habilidades" },
-      { text: "Imagem", value: "imagem" }
+      { text: "Descrição", value: "descricao" }
     ],
-    usuarios: [
-      {
-        nome: "Teste",//ConfiguracaoPerfil.perfil.nome,
-        idade: 10,
-        habilidades: "Teste",
-        imagem: "Link"
-      },
-      {
-        nome: "Frozen Yogurt",
-        idade: 10,
-        habilidades: "Skills",
-        imagem: "Link"
-      },
-      {
-        nome: "Frozen Yogurt",
-        idade: 10,
-        habilidades: "Skills",
-        imagem: "Link"
-      }
-    ]
-  })
+    usuarios: []
+  }),
+  methods: {
+    listar() {
+      let url = "http://api.anticasper.com/index.php?acao=listar";
+      axios
+        .get(url)
+        .then(res => {
+          this.usuarios = res.data;
+        })
+        .catch(err => alert(err));
+    }
+  },
+  mounted() {
+    this.listar();
+  }
 };
 </script>
 
